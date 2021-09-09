@@ -1,0 +1,15 @@
+.bid-ask-div-inline {
+    display: inline-block;
+    width: 40%;
+    border: 1px solid black;
+    padding: 15px;
+}
+
+.price-quantity {
+    display: inline-block;
+    width: 40%;
+}
+
+.header-depth {
+    text-align: center;
+}

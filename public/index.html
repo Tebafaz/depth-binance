@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="/css/global.css">
+  </head>
+
+  <body>
+    <h3>WebSocket Binance API</h3>
+    <div class="parent">
+      <div class="bid-ask-div-inline">
+        <h3 class="header-depth">Bid orders</h3>
+        <div id="bid-orders">
+          <div class="price-quantity" id="bid-prices">
+            <h3>Bid prices</h3>
+          </div>
+          <div class="price-quantity" id="bid-quantities">
+            <h3>Bid quantities</h3>
+
+          </div>
+        </div>
+        <p>sum of bid price: <span id="sum_of_bid_price"></span></p>
+        <p>sum of bid quantity: <span id="sum_of_bid_quantity"></span></p>
+      </div>
+      <div class="bid-ask-div-inline">
+        <h3 class="header-depth">Ask orders</h3>
+        <div id="ask-orders">
+            <div class="price-quantity" id="ask-prices">
+              <h3>Ask prices</h3>
+            </div>
+            <div class="price-quantity" id="ask-quantities">
+              <h3>Ask quantities</h3>
+            </div>
+        </div>
+        <p>sum of ask price: <span id="sum_of_ask_price"></span></p>
+        <p>sum of ask quantity: <span id="sum_of_ask_quantity"></span></p>
+      </div>
+    </div>
+
+    <script>
+      for(i = 0; i < 15; i++) {
+        $("#bid-prices").append(`<p>bid price ${i+1}: <span id="bid-p-${i}"></span></p>`)
+        $("#ask-prices").append(`<p>ask price ${i+1}: <span id="ask-p-${i}"></span></p>`)
+        $("#bid-quantities").append(`<p>bid quantity ${i+1}: <span id="bid-q-${i}"></span></p>`)
+        $("#ask-quantities").append(`<p>ask quantity ${i+1}: <span id="ask-q-${i}"></span></p>`)
+      }
+      
+      url = 'ws://localhost:8080/ws';
+      c = new WebSocket(url);
+      
+      c.onmessage = function(msg){
+        msg = JSON.parse(msg.data)
+        for(i = 0; i < 15; i++) {
+            $(`#bid-p-${i}`).html(msg.bids[i].price)
+            $(`#bid-q-${i}`).html(msg.bids[i].quantity)
+            $(`#ask-p-${i}`).html(msg.asks[i].price)
+            $(`#ask-q-${i}`).html(msg.asks[i].quantity)   
+        }
+        $('#sum_of_bid_price').html(msg.sum_of_bid_price)
+        $('#sum_of_bid_quantity').html(msg.sum_of_bid_quantity)
+        $('#sum_of_ask_price').html(msg.sum_of_ask_price)
+        $('#sum_of_ask_quantity').html(msg.sum_of_ask_quantity)
+      }
+    </script>
+  </body>
+</html>
