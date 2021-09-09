@@ -35,9 +35,5 @@ func sumDepth(depth models.Depth) models.DepthResponse {
 			}
 		}
 	}
-	//depthResponse.AskPriceSum = math.Round(depthResponse.AskPriceSum*1000000) / 1000000
-	//depthResponse.AskQuantSum = math.Round(depthResponse.AskQuantSum*1000000) / 1000000
-	//depthResponse.BidPriceSum = math.Round(depthResponse.BidPriceSum*1000000) / 1000000
-	//depthResponse.BidQuantSum = math.Round(depthResponse.BidQuantSum*1000000) / 1000000
 	return depthResponse
 }
